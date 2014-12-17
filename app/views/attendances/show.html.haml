@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Student:
+  = @attendance.student
+%p
+  %b User:
+  = @attendance.user
+%p
+  %b Stream:
+  = @attendance.stream
+%p
+  %b Present:
+  = @attendance.present
+
+= link_to 'Edit', edit_attendance_path(@attendance)
+\|
+= link_to 'Back', attendances_path

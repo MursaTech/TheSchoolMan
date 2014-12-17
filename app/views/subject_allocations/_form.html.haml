@@ -1,0 +1,19 @@
+= form_for @subject_allocation do |f|
+  - if @subject_allocation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@subject_allocation.errors.count, "error")} prohibited this subject_allocation from being saved:"
+      %ul
+        - @subject_allocation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :stream
+    = f.text_field :stream
+  .field
+    = f.label :subject
+    = f.text_field :subject
+  .field
+    = f.label :user
+    = f.text_field :user
+  .actions
+    = f.submit 'Save'

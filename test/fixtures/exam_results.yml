@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stream_id: 
+  exam_id: 
+  student_id: 
+  subject_id: 
+  score: MyString
+  grade: MyString
+
+two:
+  stream_id: 
+  exam_id: 
+  student_id: 
+  subject_id: 
+  score: MyString
+  grade: MyString

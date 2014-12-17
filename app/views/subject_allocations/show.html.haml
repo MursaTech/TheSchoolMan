@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Stream:
+  = @subject_allocation.stream
+%p
+  %b Subject:
+  = @subject_allocation.subject
+%p
+  %b User:
+  = @subject_allocation.user
+
+= link_to 'Edit', edit_subject_allocation_path(@subject_allocation)
+\|
+= link_to 'Back', subject_allocations_path

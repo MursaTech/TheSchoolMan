@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  student_id: 
+  diagonosis: MyText
+  prescription: MyString
+  need_for_outside_referral: false
+  user_id: 
+
+two:
+  student_id: 
+  diagonosis: MyText
+  prescription: MyString
+  need_for_outside_referral: false
+  user_id: 

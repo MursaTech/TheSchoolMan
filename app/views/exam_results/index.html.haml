@@ -1,0 +1,31 @@
+%h1 Listing exam_results
+
+%table
+  %thead
+    %tr
+      %th Stream
+      %th Exam
+      %th Student
+      %th Subject
+      %th Score
+      %th Grade
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @exam_results.each do |exam_result|
+      %tr
+        %td= exam_result.stream
+        %td= exam_result.exam
+        %td= exam_result.student
+        %td= exam_result.subject
+        %td= exam_result.score
+        %td= exam_result.grade
+        %td= link_to 'Show', exam_result
+        %td= link_to 'Edit', edit_exam_result_path(exam_result)
+        %td= link_to 'Destroy', exam_result, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Exam result', new_exam_result_path

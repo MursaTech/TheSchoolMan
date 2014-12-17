@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @guardian.name
+%p
+  %b Phone number:
+  = @guardian.phone_number
+%p
+  %b Address:
+  = @guardian.address
+%p
+  %b Id number:
+  = @guardian.id_number
+
+= link_to 'Edit', edit_guardian_path(@guardian)
+\|
+= link_to 'Back', guardians_path

@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Stream:
+  = @exam_result.stream
+%p
+  %b Exam:
+  = @exam_result.exam
+%p
+  %b Student:
+  = @exam_result.student
+%p
+  %b Subject:
+  = @exam_result.subject
+%p
+  %b Score:
+  = @exam_result.score
+%p
+  %b Grade:
+  = @exam_result.grade
+
+= link_to 'Edit', edit_exam_result_path(@exam_result)
+\|
+= link_to 'Back', exam_results_path

@@ -1,0 +1,28 @@
+= form_for @exam_result do |f|
+  - if @exam_result.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@exam_result.errors.count, "error")} prohibited this exam_result from being saved:"
+      %ul
+        - @exam_result.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :stream
+    = f.text_field :stream
+  .field
+    = f.label :exam
+    = f.text_field :exam
+  .field
+    = f.label :student
+    = f.text_field :student
+  .field
+    = f.label :subject
+    = f.text_field :subject
+  .field
+    = f.label :score
+    = f.text_field :score
+  .field
+    = f.label :grade
+    = f.text_field :grade
+  .actions
+    = f.submit 'Save'

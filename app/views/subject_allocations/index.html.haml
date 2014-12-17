@@ -1,0 +1,25 @@
+%h1 Listing subject_allocations
+
+%table
+  %thead
+    %tr
+      %th Stream
+      %th Subject
+      %th User
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @subject_allocations.each do |subject_allocation|
+      %tr
+        %td= subject_allocation.stream
+        %td= subject_allocation.subject
+        %td= subject_allocation.user
+        %td= link_to 'Show', subject_allocation
+        %td= link_to 'Edit', edit_subject_allocation_path(subject_allocation)
+        %td= link_to 'Destroy', subject_allocation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Subject allocation', new_subject_allocation_path

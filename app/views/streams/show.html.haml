@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @stream.name
+%p
+  %b Form:
+  = @stream.form
+%p
+  %b User:
+  = @stream.user
+%p
+  %b Student:
+  = @stream.student
+
+= link_to 'Edit', edit_stream_path(@stream)
+\|
+= link_to 'Back', streams_path

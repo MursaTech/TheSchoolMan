@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  dob: 2014-12-17 19:35:30
+  admission_number: MyString
+  account_id: 
+  guradian_id: 
+
+two:
+  name: MyString
+  dob: 2014-12-17 19:35:30
+  admission_number: MyString
+  account_id: 
+  guradian_id: 
