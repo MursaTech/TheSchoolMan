@@ -1,25 +1,96 @@
-= form_for @student do |f|
-  - if @student.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
-      %ul
-        - @student.errors.full_messages.each do |msg|
-          %li= msg
+.row
+	.col-lg-12
+		%section.panel
+			= form_for @student do |f|
+				.panel-body
+					- if @student.errors.any?
+						#error_explanation
+							%h2= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
+							%ul
+								- @student.errors.full_messages.each do |msg|
+									%li= msg
+					.col-lg-6
+						%br
+						%h3 Student's Details
+						%hr
+						.form-group
+							= f.label :name
+							.iconic-input
+								%i.fa.fa-user
+								= f.text_field :name, class: "form-control"
+						.form-group
+							= f.label :admission_number
+							.iconic-input
+								%i.fa.fa-list-ol
+								= f.text_field :admission_number, class: "form-control"
+						.form-group
+							= f.label "Previous School"
+							.iconic-input
+								%i.fa.fa-university
+								= f.text_field :previous_school, class: "form-control"
+						.form-group
+							= f.label "Last Exam Score"
+							.iconic-input
+								%i.fa.fa-file-text-o
+								= f.text_field :last_exam_score, class: "form-control"
+						.form-group
+							%label Class
+							.input-group.m-bot15
+								.input-group-btn
+									%button.btn.btn-primary.dropdown-toggle{"data-original-title" => "", "data-toggle" => "dropdown", :title => "", :type => "button"}
+										Class
+										%span.caret
+									%ul.dropdown-menu
+										%li
+											%a{:href => "#"} Action
+										%li
+											%a{:href => "#"} Another action
+										%li
+											%a{:href => "#"} Something else here
+										%li.divider
+										%li
+											%a{:href => "#"} Separated link
+								%select.form-control{:type => "text"}
+						.form-group
+							= f.label :dob, "Date of Birth"
+							.iconic-input
+								%i.fa.fa-calendar
+								= f.text_field :dob, class: "datetimepicker form-control"
+						.form-group
+							= f.label :photo
+							= f.file_field :photo, class: "form-control"
+					.col-lg-6
+						%br
+						%h3 Guardian's Details
+						%hr
+						.form-group
+							%label Parent / Guardian already saved? If yes, choose from dropdown.
+							%select.form-control
+						.form-group
+							%label Name
+							.iconic-input
+								%i.fa.fa-user
+								= text_field_tag "guardian_name", (@student.guardian.nil?? nil : @student.guardian.name), class: "form-control"
+						.form-group
+							%label ID Number
+							.iconic-input
+								%i.fa.fa-credit-card
+								= text_field_tag "guardian_id_no", (@student.guardian.nil?? nil : @student.guardian.id_number), class: "form-control"
+						.form-group
+							%label Phone Number
+							.iconic-input
+								%i.fa.fa-phone
+								= text_field_tag "guardian_number", (@student.guardian.nil?? nil : @student.guardian.phone_number), class: "form-control"
+						.form-group
+							%label Address
+							.iconic-input
+								%i.fa.fa-map-marker
+								= text_field_tag "guardian_address", (@student.guardian.nil?? nil : @student.guardian.address), class: "form-control"
+				.panel-footer
+					.actions.pull-right
+						%button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+							%i.fa.fa-save
+							Save
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :dob
-    = f.datetime_select :dob
-  .field
-    = f.label :admission_number
-    = f.text_field :admission_number
-  .field
-    = f.label :account
-    = f.text_field :account
-  .field
-    = f.label :guradian
-    = f.text_field :guradian
-  .actions
-    = f.submit 'Save'
+/ %script{:charset => "utf-8", :type => "text/javascript"}
+/ 	$('.datetimepicker').datetimepicker();

@@ -1,0 +1,25 @@
+= form_for @health_record do |f|
+  - if @health_record.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@health_record.errors.count, "error")} prohibited this health from being saved:"
+      %ul
+        - @health_record.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :student
+    = f.text_field :student
+  .field
+    = f.label :diagonosis
+    = f.text_area :diagonosis
+  .field
+    = f.label :prescription
+    = f.text_field :prescription
+  .field
+    = f.label :need_for_outside_referral
+    = f.check_box :need_for_outside_referral
+  .field
+    = f.label :user
+    = f.text_field :user
+  .actions
+    = f.submit 'Save'

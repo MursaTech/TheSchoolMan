@@ -1,9 +1,73 @@
-%p#notice= notice
+%section.content
+	/ %h1
+	/ 	Panel & Wells
+	/ 	%small Control panel
+	/ / start:breadcrumb
+	/ %ol.breadcrumb
+	/ 	%li
+	/ 		%a{:href => "#"}
+	/ 			%i.fa.fa-home
+	/ 			Dashboard
+	/ 	%li
+	/ 		%a{:href => "#"} Ui Element
+	/ 	%li.active Panel & Wells
+	/ / end:breadcrumb
+	/ / start:content
+	.row
+		/ .col-md-12
+		/ 	%h3 PANEL
+		.col-md-12
+			.panel.panel-primary.panel-drop
+				.panel-heading
+					%h3.panel-title 
+						= @form.name
+				.panel-body
+					.row
+						.col-md-6
+							%h4 Streams
+							%hr
+								.task-content
+									%ul#sortable.task-list
+									- @form.streams.each do |s|
+										%li.list-primary
+											.task-title
+												%span.task-title-sp
+													= s.name
+												%span.badge.badge-sm.label-success 
+													= s.students.count
+						.col-md-6
+							%h4 Streams
+							%hr
+		/ 	.col-md-12
+		/ 	%h3 WELLS
+		/ .col-md-6
+		/ 	.well.well-lg
+		/ 		%h3 Large Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.well-sm
+		/ 		%h3 Smalls Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.success-well
+		/ 		%h3 Success Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.warning-well
+		/ 		%h3 Warning Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ .col-md-6
+		/ 	.well
+		/ 		%h3 Normal Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.primary-well
+		/ 		%h3 Primary Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.info-well
+		/ 		%h3 Info Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+		/ 	.well.danger-well
+		/ 		%h3 Danger Wells
+		/ 		%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+	/ end:content
 
-%p
-  %b Name:
-  = @form.name
-
-= link_to 'Edit', edit_form_path(@form)
-\|
-= link_to 'Back', forms_path
+/ 	
+%script{:src => "http://code.jquery.com/ui/1.10.3/jquery-ui.js"}
+%link{:href => "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css", :rel => "stylesheet"}/

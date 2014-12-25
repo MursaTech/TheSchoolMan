@@ -1,29 +1,234 @@
-%h1 Listing students
+%section.content
+	- if notice
+		.alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+			%button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+				%span{"aria-hidden" => "true"} ×
+			= notice
+	%h1
+		Students
+		%small All your students
+	/ start:breadcrumb
+	%ol.breadcrumb
+		%li
+			%a{:href => "#"}
+				%i.fa.fa-users
+				Students
+		%li
+			%a{:href => "#"} All
+		.pull-right
+			.btn-toolbar{role: "toolbar"}
+				.btn-group
+					%a.btn.btn-default{href: "#{students_upload_page_path}"}
+						%i.fa.fa-cloud-upload
+						Upload
+						/ %span.caret
+					%a.btn.btn-default#add_to_class{href: "#", "data-toggle" => "modal", "data-target" => "#class_modal"}
+						%i.fa.fa-mail-forward
+						Add to Class        
+					%a#delete-students.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
+						%i.fa.fa-times
+						Delete     
+					%a.btn.btn-default{href: "#{new_student_path}"}
+						%i.fa.fa-plus
+						New
+	/ end:breadcrumb
+	/ start:content
+	.row
+		.col-md-12
+			/ start:dynamic data table
+			.adv-table
+				%table#example.display.table.table-bordered.table-striped
+					%thead
+						%tr
+							%th
+								= check_box_tag "toggle_students"
+							%th Name
+							%th Class
+							%th Admission Number
+							%th Join Date
+							%th Guardian Name
+					%tbody.students_table
+						- @students.each do |student|
+							%tr.gradeX
+								%td
+									= check_box_tag "student[student.id]", student.id
+								%td
+									= link_to student.name, @student
+								%td
+									= student.stream.name
+								%td
+									= student.admission_number
+								%td
+									= student.created_at
+								%td
+									= student.guardian.name
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Dob
-      %th Admission number
-      %th Account
-      %th Guradian
-      %th
-      %th
-      %th
-      
-  %tbody
-    - @students.each do |student|
-      %tr
-        %td= student.name
-        %td= student.dob
-        %td= student.admission_number
-        %td= student.account
-        %td= student.guradian
-        %td= link_to 'Show', student
-        %td= link_to 'Edit', edit_student_path(student)
-        %td= link_to 'Destroy', student, :method => :delete, :data => { :confirm => 'Are you sure?' }
+	#delete_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Delete Students?
+				= form_tag delete_multiple_students_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'delete_students'
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-danger{:type => "submit"} 
+							%i.fa.fa-trash-o
+							Delete
 
-%br
+	#class_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add Students to class
+				= form_tag add_to_class_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'students'
+						/ %label Select a class from the dropdown below
+						%select.form-control{name: 'stream'}
+							/ %option{value: "select"} Select a class
+							- Stream.all.each do |s|
+								%option{value: s.name}
+									= s.name
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-plus
+							Add to class
 
-= link_to 'New Student', new_student_path
+
+	/ .ui.mini.modal#list_modal
+	/   %i.close.icon
+	/   .ui.blue.header
+	/     %i.icon.unordered.list.circular
+	/     .content
+	/       Choose a list to add
+	/       .sub.header
+	/         You have selected
+	/         %span.amount
+	/           20
+	/         contacts to add this list
+	/   = form_tag add_contacts_to_list_path do |f|
+	/     .content      
+	/       = hidden_field_tag "list_contacts"
+	/       .field
+	/         .ui.selection.dropdown
+	/           = hidden_field_tag "list"
+	/           .default.text
+	/             Select your list
+	/           %i.dropdown.icon
+	/           .menu
+	/             - @distribution_lists.each do |list|
+	/               .item{"data-value" => list.id}            
+	/                 = list.name
+	/     .actions
+	/       .ui.red.mini.right.labeled.icon.button
+	/         Cancel
+	/         %i.remove.icon
+	/       .ui.positive.mini.right.labeled.submit.icon.button
+	/         Add
+	/         %i.checkmark.icon
+	/ .ui.mini.modal#group_modal
+	/   %i.close.icon
+	/   .ui.blue.header
+	/     %i.icon.users.circular      
+	/     .content
+	/       Choose a group
+	/       .sub.header
+	/         You have selected
+	/         %span.amount
+	/           10
+	/         contacts to add to this group
+	/   .content
+	/     .left
+	/       = form_tag add_contacts_to_group_path do |f|
+	/         = hidden_field_tag "group_contacts"
+	/         .field
+	/           .ui.selection.dropdown
+	/             = hidden_field_tag "group"
+	/             .default.text
+	/               Select your group
+	/             %i.dropdown.icon
+	/             .menu
+	/               - @groups.each do |group|
+	/                 .item{"data-value" => group.id}            
+	/                   = group.name
+	/     .right
+	/       = form_tag add_contacts_to_group_path, id: 'new_group' do |f|
+	/         = hidden_field_tag "new_group_contacts"
+	/         .field
+	/           .ui.icon.input
+	/             %input{type:'text', placeholder: 'Enter new group name..', name: 'name', value: params[:name]}
+	/   .actions
+	/     .ui.red.mini.right.labeled.icon.button
+	/       Cancel
+	/       %i.remove.icon
+	/     .ui.positive.mini.right.labeled.submit.icon.button
+	/       Add
+	/       %i.checkmark.icon
+	/ .ui.mini.modal#send_message_modal
+	/   %i.close.icon
+	/   .ui.blue.header
+	/     %i.chat.outline.icon      
+	/     .content
+	/       %span.chosen
+	/   .content
+	/     .right
+	/       = form_tag send_new_message_path, class: "form ui" do |f|
+	/         .fields
+	/           .field
+	/             = hidden_field_tag "phone_number"
+	/             = text_area_tag 'name'
+	/   .actions
+	/     .ui.red.mini.right.labeled.icon.button
+	/       Cancel
+	/       %i.remove.icon
+	/     .ui.positive.mini.right.labeled.submit.icon.button
+	/       Send
+	/       %i.checkmark.icon
+
+	/ .ui.mini.modal#new_contact_modal
+	/   %i.close.icon
+	/   .ui.blue.header
+	/     %i.icon.plus.icon.circular      
+	/     .content
+	/       Add a Contact
+	/   .content
+	/     = form_for Contact.new do |f|
+	/       .ui.form
+	/         .two.fields
+	/           .field
+	/             = f.label :name
+	/           .field
+	/             = f.text_field :name
+	/         .two.fields
+	/           .field
+	/             = f.label :phone_number
+	/           .field
+	/             = f.text_field :phone_number, placeholder: "#{@country_code}722123456"
+	/   .actions
+	/     .ui.red.mini.right.labeled.icon.button
+	/       Cancel
+	/       %i.remove.icon
+	/     .ui.positive.mini.right.labeled.submit.icon.button
+	/       Add
+	/       %i.checkmark.icon
+
+	%script{:charset => "utf-8", :type => "text/javascript"}
+		$(document).ready(function() {
+		alert("hey")
+		$('#example').dataTable( {
+		"aaSorting": [[ 4, "desc" ]]
+		} );
+		} );

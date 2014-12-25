@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: streams
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  form_id    :integer
+#  user_id    :integer
+#  student_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

@@ -36,6 +36,15 @@ class SubjectsController < ApplicationController
     respond_with(@subject)
   end
 
+  def delete_multiple
+    deleted = 0
+    params[:delete_subjects].split(',').each do |id|
+      Subject.find_by(id: id).destroy
+      deleted = deleted + 1
+    end
+    redirect_to subjects_path, notice: "You have deleted #{deleted} subjects."
+  end
+
   private
     def set_subject
       @subject = Subject.find(params[:id])

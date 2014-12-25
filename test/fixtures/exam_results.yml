@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: exam_results
+#
+#  id         :integer          not null, primary key
+#  stream_id  :integer
+#  exam_id    :integer
+#  student_id :integer
+#  subject_id :integer
+#  score      :string(255)
+#  grade      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

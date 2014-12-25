@@ -1,0 +1,35 @@
+- @students.each do |student|
+  %tr.gradeX
+    %td
+      = check_box_tag "student[student.id]", student.id
+    %td
+      = student.name
+    %td
+      = "student.stream.name"
+    %td
+      = student.admission_number
+    %td
+      = student.created_at
+    %td
+      = "student.gurdian.name"
+  / %tr
+  /   %td
+  /     = check_box_tag "student[student.id]", student.id
+  /   %td
+  /     / = image_tag student.photo.url, class: "ui avatar image"
+  /   %td
+  /     = link_to student.name, class: "author"
+  /   %td.editable{data: { id: student.id }}
+  /     = "student.guardian.name"
+  /   / %td
+  /   /   - if student.blocked
+  /   /     = "YES"
+  /   /   - else
+  /   /     = "NO"
+  /   %td
+  /     %a.send_message
+  /       %i.chat.outline.icon{"data-content" => "Send a message"}
+  /   %td
+  /     %a.ui.labeled.icon.delete_one{"data-confirm" => "Are you sure you want to delete this student?","data-content" => "Delete this student", href: student_path(student), "data-method" => "delete", rel: "nofollow", style: "text-decoration: none; color: red;"}
+  /       %i.delete.icon
+  /   

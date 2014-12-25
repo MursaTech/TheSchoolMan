@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HealthsControllerTest < ActionController::TestCase
   setup do
-    @health = healths(:one)
+    @health_record = healths(:one)
   end
 
   test "should get index" do
@@ -18,30 +18,30 @@ class HealthsControllerTest < ActionController::TestCase
 
   test "should create health" do
     assert_difference('Health.count') do
-      post :create, health: { diagonosis: @health.diagonosis, need_for_outside_referral: @health.need_for_outside_referral, prescription: @health.prescription, student_id: @health.student_id, user_id: @health.user_id }
+      post :create, health: { diagonosis: @health_record.diagonosis, need_for_outside_referral: @health_record.need_for_outside_referral, prescription: @health_record.prescription, student_id: @health_record.student_id, user_id: @health_record.user_id }
     end
 
     assert_redirected_to health_path(assigns(:health))
   end
 
   test "should show health" do
-    get :show, id: @health
+    get :show, id: @health_record
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @health
+    get :edit, id: @health_record
     assert_response :success
   end
 
   test "should update health" do
-    patch :update, id: @health, health: { diagonosis: @health.diagonosis, need_for_outside_referral: @health.need_for_outside_referral, prescription: @health.prescription, student_id: @health.student_id, user_id: @health.user_id }
+    patch :update, id: @health_record, health: { diagonosis: @health_record.diagonosis, need_for_outside_referral: @health_record.need_for_outside_referral, prescription: @health_record.prescription, student_id: @health_record.student_id, user_id: @health_record.user_id }
     assert_redirected_to health_path(assigns(:health))
   end
 
   test "should destroy health" do
     assert_difference('Health.count', -1) do
-      delete :destroy, id: @health
+      delete :destroy, id: @health_record
     end
 
     assert_redirected_to healths_path

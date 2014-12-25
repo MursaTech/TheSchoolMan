@@ -1,21 +1,74 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @student.name
-%p
-  %b Dob:
-  = @student.dob
-%p
-  %b Admission number:
-  = @student.admission_number
-%p
-  %b Account:
-  = @student.account
-%p
-  %b Guradian:
-  = @student.guradian
-
-= link_to 'Edit', edit_student_path(@student)
-\|
-= link_to 'Back', students_path
+%section.content
+	.row
+		.col-lg-3{style: "padding-right: 0;"}
+			.well.primary-well
+				= image_tag @student.photo.url, height: "120px"
+		.col-lg-9{style: "padding-left: 0;"}
+			.well.info-well
+				%p
+					%b Name:
+					= @student.name
+				%p
+					%b Dob:
+					= @student.dob
+				%p
+					%b Admission number:
+					= @student.admission_number
+				%p
+					%b Guradian:
+					= @student.guardian.name
+	.row
+		.col-lg-12
+			%div{:role => "tabpanel"}
+				/ Nav tabs
+				%ul.nav.nav-tabs{:role => "tablist"}
+					%li.active{:role => "presentation"}
+						%a{"aria-controls" => "home", "data-toggle" => "tab", :href => "#performance", :role => "tab"} Performance
+					%li{:role => "presentation"}
+						%a{"aria-controls" => "profile", "data-toggle" => "tab", :href => "#descipline", :role => "tab"} Desciplinary Record
+					%li{:role => "presentation"}
+						%a{"aria-controls" => "messages", "data-toggle" => "tab", :href => "#health", :role => "tab"} Health History
+					%li{:role => "presentation"}
+						%a{"aria-controls" => "settings", "data-toggle" => "tab", :href => "#extra-curricular", :role => "tab"} Extra-Curricular Activities
+				/ Tab panes
+				.tab-content
+					#performance.tab-pane.active{:role => "tabpanel"}
+						%ol.breadcrumb
+							%li
+								%a{:href => "#"}
+									%i.fa.fa-user
+									Student
+							%li
+								%a{:href => "#"} Performance
+						/ end:breadcrumb
+						/ start:content
+						.row
+							.col-md-12
+								/ start:hero graph chart morris
+								/ .box
+								%h4 Performance Graph
+								%hr
+									#hero-graph.graph
+								/ end:hero graph chart morris
+								/ start:hero area chart morris
+							/ 	.box
+							/ 		%h4 Quarterly Apple iOS device unit sales
+							/ 		%hr
+							/ 			#hero-area.graph
+							/ 	/ end:hero area chart morris
+							/ .col-md-6
+							/ 	/ start:hero bar chart morris
+							/ 	.box
+							/ 		%h4 iPhone CPU benchmarks
+							/ 		%hr
+							/ 			#hero-bar.graph
+							/ 	/ end:hero bar chart morris
+							/ 	/ start:hero donut chart morris
+							/ 	.box
+							/ 		%h4 Donut flavours
+							/ 		%hr
+							/ 			#hero-donut.graph
+							/ 	/ end:hero donut chart morris
+					#descipline.tab-pane{:role => "tabpanel"} ...
+					#health.tab-pane{:role => "tabpanel"} ...
+					#extra-curricular.tab-pane{:role => "tabpanel"} ...

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Student:
+  = @health_record.student
+%p
+  %b Diagonosis:
+  = @health_record.diagonosis
+%p
+  %b Prescription:
+  = @health_record.prescription
+%p
+  %b Need for outside referral:
+  = @health_record.need_for_outside_referral
+%p
+  %b User:
+  = @health_record.user
+
+= link_to 'Edit', edit_health_path(@health_record)
+\|
+= link_to 'Back', healths_path

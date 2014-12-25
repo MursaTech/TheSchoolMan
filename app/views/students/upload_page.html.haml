@@ -1,0 +1,157 @@
+%section.content
+	.row
+		.col-lg-10
+			.panel.panel-primary.panel-drop
+				.panel-heading
+					%h3.panel-title Student Details Bulk Upload
+				.panel-body
+					/ %form#my-awesome-dropzone.dropzone.clickable{:action => "assets/dropzone/upload.php"}
+					/ 	.default.message
+					/ 		%span Drop files here to upload
+					= form_for @student, :url => upload_students_path, :html => { :class => "ui small form attached segment", :multipart => true } do |f|
+						.form-group
+							= f.file_field :upload_file, class: "form-control"
+						/ .progress.progress-striped.active
+						/ 	.progress-bar.progress-bar-success{"role" => "progressbar", "aria-valuenow" => "40", "aria-valuemin" => "0" ,"aria-valuemax" => "100", "style" => "width: 0"}
+						%button.btn.btn-primary.btn-rounded
+							%i.fa.fa-cloud-upload
+							Submit
+					/ %br
+					/ .well.primary-well
+					/ 	%p Lorem ipsum dolor sit amet officia deserunt mollit anim id est laborum.
+				.panel-footer{style: "padding: 10px 10px 5px"}
+					%p We currently support the xls, xlsx & csv file formats. Please ensure you follow the following rules:
+					%ol
+						%li
+							The first row must contain the column names
+						%li
+							The file should contain the following information, in this order:
+							%br
+							Student's name, Student's date of birth, Student's admission number, Student's class (stream), Student's previous school, Student's last exam score, guardian's name, guardian's phone number, guardian's address, guardian's id number
+						%li
+							All details must be provided
+
+/ / .ui.page.grid.overview.segment
+/ /   .sixteen.wide.column
+/ /     %h1.ui.blue.header
+/ /       %a.header_link{href: students_path}
+/ /         %i.icon.circular.blue.users
+/ /         .content
+/ /           Students
+/ /           .sub.header
+/ /             Upload Students your students from a csv, xlsx or vcf card
+		
+/ .ui.attached.info.message
+/   .header
+/     Bulk Contact Upload
+/   %ul.list
+/     %li
+/       Please ensure that your students have the full country code information (e.g. +254722123456)
+/     %li
+/       For Excel and CSV files ensure the name is the first column and phone number is second
+/ = form_for @student, :url => Student.new, :html => { :class => "ui small form attached segment", :multipart => true } do |f|
+/   / .field
+/   /   .ui.selection.dropdown                  
+/   /     .default.text
+/   /       Select Country
+/   /     %input{type: "hidden", name: "country" }
+/   /     %i.dropdown.icon
+/   /     .menu
+/   /       - countries.each do |country|
+/   /         .item{"data-value" => country}
+/   /           = country
+/   .field
+/     .field.inline
+/       .ui.checkbox
+/         = check_box_tag "confirm_student" 
+/         = f.label "By ticking here, I confirm that these students have saved my number on whatsapp."
+/   .field
+/     .ui.labeled.icon.secondary.button.mini.right.fileinput-button
+/       = f.file_field :upload_file
+/       %i.cloud.upload.icon
+/       Select File
+/     #upload-file.ui.right.labeled.icon.button.positive.disabled.mini
+/       %i.cloud.save.icon
+/       Submit
+
+/   .results
+/     .ui.striped.disabled.progress
+/       .bar{style: "width:0%"}
+/ .ui.bottom.attached.message
+/   %i.icon.help
+/   %span#upload_msg.text
+/     Are you sure you know what you are doing? Check out our sample files:
+/     %a.author{href: '/sample.xls', target: '_blank'}
+/       xls,
+/     %a.author{href: '/sample.xlsx', target: '_blank'}
+/       xlsx,
+/     %a.author{href: '/sample.csv', target: '_blank'}
+/       csv,
+/     &amp;
+/     %a.author{href: '/sample.vcf', target: '_blank'}
+/       vcard
+
+/   / .ui.message
+/   / .six.wide.column
+/   / .ui.segment
+/   /   %h3.ui.blue.header
+/   /     %i.icon.circular.blue.question
+/   /     .content
+/   /       How to Import?        
+:javascript
+	$(function() {
+		'use strict';
+		console.log('Initializing file upload');
+
+		var formData = null;
+
+		$('#student_upload_file').fileupload({
+			url: "#",
+			autoUpload: false,
+
+			progressall: function(e, data) {
+				
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				console.log("In data progress ", progress);
+				$('.results .bar').removeClass('disabled').css("width", progress + "%");
+			},
+
+			add: function(e, data) {
+				console.log("Called add");
+				var file = data.files[0];
+				var types = /(\.|\/)(xls|csv|xlsx|vcf)$/i;
+				if (types.test(file.type) || types.test(file.name))
+				{
+					formData = data;
+					$('#upload-file').removeClass('disabled');
+				}
+				else
+				{
+					alert(file.name +" is not a xls, xlsx, csv or vcf image file");
+				} 
+			},
+
+			start: function(e) {
+				$('.bottom.message .text').html('Uploading your file');
+				$('.right.fileinput-button').addClass('disabled');
+				$('.bottom.message i').removeClass('help').addClass('loading');
+			},
+
+			done: function(e,data) {
+				if (!data.result.success) {
+					$('.results .progress').addClass('failed');
+					$('#upload_msg').html("Upload failed: " + data.result.error );
+				} else {
+					$('.message.bottom').addClass('success');
+					$('.bottom.message i').removeClass('loading').addClass('checkmark');
+					$('#upload_msg').html(data.result.imported + " students were imported. " + data.result.duplicates + " duplicates detected");
+				}
+			}
+		});
+
+		$('#upload-file').click(function() {
+			if(formData != null)
+				formData.submit();
+		});
+
+	});

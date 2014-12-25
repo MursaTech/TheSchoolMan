@@ -1,0 +1,29 @@
+%h1 Listing healths
+
+%table
+  %thead
+    %tr
+      %th Student
+      %th Diagonosis
+      %th Prescription
+      %th Need for outside referral
+      %th User
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @health_records.each do |health|
+      %tr
+        %td= health.student
+        %td= health.diagonosis
+        %td= health.prescription
+        %td= health.need_for_outside_referral
+        %td= health.user
+        %td= link_to 'Show', health
+        %td= link_to 'Edit', edit_health_path(health)
+        %td= link_to 'Destroy', health, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Health', new_health_path

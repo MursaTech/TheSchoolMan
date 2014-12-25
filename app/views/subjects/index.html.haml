@@ -1,21 +1,68 @@
-%h1 Listing subjects
+%section.content
+  %h1
+    Subjects
+    %small All the subjects
+  / start:breadcrumb
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-users
+        Subjects
+    %li
+      %a{:href => "#"} All
+    .pull-right
+      .btn-toolbar{role: "toolbar"}
+        .btn-group
+          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", "data-original-title" => "", :title => "", :type => "button"}
+            %i.fa.fa-cloud-upload
+            Upload
+            %span.caret
+          %a.btn.btn-default{href: "#"}
+            %i.fa.fa-mail-forward
+            Add to Class        
+          %a#delete-subjects.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
+            %i.fa.fa-times
+            Delete     
+          %a.btn.btn-default{href: "#{new_subject_path}"}
+            %i.fa.fa-plus
+            New
+  / end:breadcrumb
+  / start:content
+  .row
+    .col-md-12
+      / start:dynamic data table
+      .adv-table
+        %table#example.display.table.table-bordered.table-striped
+          %thead
+            %tr
+              %th
+                = check_box_tag "toggle_subjects"
+              %th Name
+              %th 
+              %th 
+              %th 
+              %th 
+          %tbody.subjects_table
+            - @subjects.each do |subject|
+              %tr.gradeX
+                %td
+                  = check_box_tag "subject[subject.id]", subject.id
+                %td
+                  = link_to subject.name, @subject
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th
-      %th
-      %th
-      
-  %tbody
-    - @subjects.each do |subject|
-      %tr
-        %td= subject.name
-        %td= link_to 'Show', subject
-        %td= link_to 'Edit', edit_subject_path(subject)
-        %td= link_to 'Destroy', subject, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Subject', new_subject_path
+  #delete_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Delete Subjects?
+        = form_tag delete_multiple_subjects_path do |f|
+          .modal-body
+            %label#lbl-msg
+            = hidden_field_tag 'delete_subjects'
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-cloud-times
+              Cancel
+            %button.btn.btn-danger{:type => "submit"} Delete
