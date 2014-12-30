@@ -1,4 +1,40 @@
 $(function() {
+  $("#classes").change(function() {
+    $.ajax({
+      type: "POST",
+      url: '/forms_and_streams',
+      dataType: 'json',
+      data: { form: $('select[id=classes]').val()},
+      success: function(data, textStatus, jqXhr) {
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i])
+          $("#streams").append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+        };
+      }
+    });
+  })
+
+  $("#parents").change(function() {
+    // if ($('select[id=parents]').val() === "Guardian Not Listed? Fill in the details below:") {
+    //   $("#guardian_name").removeProp('disabled');
+    //   $("#guardian_id_no").removeProp('disabled');
+    //   $("#guardian_number").removeProp('disabled');
+    //   $("#guardian_address").removeProp('disabled');
+    // }
+    if($('#parents')[0].selectedIndex != 0 && $('#parents')[0].selectedIndex != 1) {
+      $.ajax({
+        type: "GET",
+        url: '/guardians/' + $("#parents").val() + '.json',
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr) {
+          $("#guardian_name").val(data.name);
+          $("#guardian_id_no").val(data.id_number);
+          $("#guardian_number").val(data.phone_number);
+          $("#guardian_address").val(data.address);
+        }
+      });
+    }
+  })
   $('#example').dataTable( {
       "aaSorting": [[ 4, "desc" ]]
   } );

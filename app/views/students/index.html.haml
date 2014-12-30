@@ -14,10 +14,24 @@
 				%i.fa.fa-users
 				Students
 		%li
-			%a{:href => "#"} All
+			= link_to "All", students_path
 		.pull-right
 			.btn-toolbar{role: "toolbar"}
 				.btn-group
+					%button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+						%i.fa.fa-filter
+						Filter
+						%span.caret
+					%ul.dropdown-menu{:role => "menu"}
+						- Stream.all.each do |s|
+							%li
+								%a{:href => "?class=#{s.id}", id: "#{s.name}"}
+									= s.name
+						/ %li.divider
+						/ - Form.all.each do |form|
+						/ 	%li
+						/ 		%a{:href => "?class=#{form.id}", id: "#{form.name}"}
+						/ 			= form.name
 					%a.btn.btn-default{href: "#{students_upload_page_path}"}
 						%i.fa.fa-cloud-upload
 						Upload
@@ -53,9 +67,9 @@
 								%td
 									= check_box_tag "student[student.id]", student.id
 								%td
-									= link_to student.name, @student
+									= link_to student.name, student
 								%td
-									= student.stream.name
+									= student.stream.nil?? "" : student.stream.name
 								%td
 									= student.admission_number
 								%td

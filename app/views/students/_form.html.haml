@@ -35,22 +35,27 @@
 								= f.text_field :last_exam_score, class: "form-control"
 						.form-group
 							%label Class
-							.input-group.m-bot15
-								.input-group-btn
-									%button.btn.btn-primary.dropdown-toggle{"data-original-title" => "", "data-toggle" => "dropdown", :title => "", :type => "button"}
-										Class
-										%span.caret
-									%ul.dropdown-menu
-										%li
-											%a{:href => "#"} Action
-										%li
-											%a{:href => "#"} Another action
-										%li
-											%a{:href => "#"} Something else here
-										%li.divider
-										%li
-											%a{:href => "#"} Separated link
-								%select.form-control{:type => "text"}
+							.row
+								.col-sm-3{style: "padding-right: 0px;"}
+									%select.form-control#classes{:type => "text"}
+										%option Select Class
+										- Form.all.each do |form|
+											%option{value: "#{form.id}"}
+												= form.name
+								.col-sm-9{style: "padding-left: 5px;"}
+									%select.form-control#streams{:type => "text", name: "student[stream_id]"}
+							/ .input-group.m-bot15
+							/ 	.input-group-btn
+							/ 		%button.btn.btn-primary.dropdown-toggle{"data-original-title" => "", "data-toggle" => "dropdown", :title => "", :type => "button"}
+							/ 			Class
+							/ 			%span.caret
+							/ 		%ul.dropdown-menu#forms
+							/ 			- Form.all.each do |form|
+							/ 				%li
+							/ 					%a{id: "#{form.name}"}
+							/ 						= form.name
+							/ 	%select.form-control#streams{:type => "text"}
+							/ 		%option Select a stream
 						.form-group
 							= f.label :dob, "Date of Birth"
 							.iconic-input
@@ -65,7 +70,12 @@
 						%hr
 						.form-group
 							%label Parent / Guardian already saved? If yes, choose from dropdown.
-							%select.form-control
+							%select.form-control#parents{:type => "text", name: "guardian"}
+								%option Select Guardian
+								%option Guardian Not Listed? Fill in the details below:
+								- Guardian.all.each do |g|
+									%option{value: "#{g.id}"}
+										= g.name
 						.form-group
 							%label Name
 							.iconic-input
@@ -91,6 +101,36 @@
 						%button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
 							%i.fa.fa-save
 							Save
+%script{:charset => "utf-8", :type => "text/javascript"}
+	function populateStreams() {
+	var e = document.getElementById("classes");
+	var value = e.options[e.selectedIndex].text;
+	var f = document.getElementById("forms-streams").value
+	alert(f)
+	/ for (var item in f) {
+	/ console.log(f[item])
+	/ if(f[item] === value) {
+	/ var option = document.createElement("option");
+	/ option.text = f[item];
+	/ option.value = item; 
+	/ document.getElementById("streams").options.add(option);
+	/ }
+	/ }
+	/ alert("The input value has changed. The new value is: " + f);
+	}
 
-/ %script{:charset => "utf-8", :type => "text/javascript"}
-/ 	$('.datetimepicker').datetimepicker();
+	function parentDetails() {
+	document.getElementById("guardian_name").value = "Muaad"
+	}
+/ %script{:src => "//code.jquery.com/jquery-1.10.2.js"}
+/ :javascript
+/ 	alert("hello")
+/ 	$(function() {
+/ 		alert("hello")
+/ 		$("#parents").change(function() {
+/ 			alert("hello")
+/ 		});
+/ 		$.get('/students.json', function(data) {
+/ 		  alert(data)
+/ 		}
+/ 	});

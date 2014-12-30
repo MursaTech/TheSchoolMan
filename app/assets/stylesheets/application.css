@@ -16,7 +16,7 @@
  *= require arjuna
  *= require demo_page
  *= require demo_table
- *= require dropzone
+ * require dropzone
  *= require tasks
  *= require fullcalendar
  *= require fullcalendar.print

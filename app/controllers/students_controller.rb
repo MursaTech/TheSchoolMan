@@ -1,15 +1,28 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
-    @students = Student.all.order('created_at desc').page params[:page]
-    respond_with(@students)
+    if params[:class]
+      @students = Student.where(stream_id: params[:class])
+    else
+      @students = Student.all.order('created_at desc').page params[:page]
+    end
+    # respond_with(@students)
+    respond_to do |format|
+      format.json { render json: { students: @students} }
+      format.html { render action: 'index' }
+    end
   end
 
   def show
     respond_with(@student)
+    # @student = Student.find(params[:id])
+    # respond_to do |format|
+    #   format.json { render json: { student: @student} }
+    #   format.html { render action: 'show' }
+    # end
   end
 
   def new
@@ -21,8 +34,12 @@ class StudentsController < ApplicationController
   end
 
   def create
-    guardian = Guardian.find_or_create_by! name: params[:guardian_name], phone_number: params[:guardian_number],
+    begin
+      guardian = Guardian.find(params[:guardian])
+    rescue Exception => e
+      guardian = Guardian.find_or_create_by! name: params[:guardian_name], phone_number: params[:guardian_number],
                address: params[:guardian_address], id_number: params[:guardian_id_no]
+    end
     @student = Student.new(student_params)
     @student.guardian_id = guardian.id
     @student.save
@@ -135,6 +152,10 @@ class StudentsController < ApplicationController
     else
       redirect_to students_path, notice: "Please select a class to add the students to."
     end
+  end
+
+  def forms_and_streams
+    render json: Form.find(params[:form]).streams
   end
 
   private

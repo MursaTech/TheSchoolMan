@@ -14,7 +14,7 @@
 //= require jquery.infinite-pages
 //= require jquery-1.11.1.min
 //= require jquery_ujs
-//= require bootstrap.min
+// require bootstrap.min
 //= require arjuna
 //= require students
 //= require pages
@@ -24,7 +24,7 @@
 //= require fullcalendar.min
 //= require jquery.checkboxes
 //= require jquery.datetimepicker
-//= require dropzone
+// require dropzone
 //= require owl-carousel-plugin
 //= require owl-carousel
 //= require jquery.flot.min

@@ -9,7 +9,11 @@ class GuardiansController < ApplicationController
   end
 
   def show
-    respond_with(@guardian)
+    # respond_with(@guardian)
+    respond_to do |format|
+      format.json { render json: @guardian }
+      format.html { render action: 'show' }
+    end
   end
 
   def new

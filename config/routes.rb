@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   post "/upload_students" => "students#bulk_upload", :as => "upload_students", via: [:post]
   
   post "/add_to_class" => "students#add_to_class", :as => "add_to_class", via: [:post]
+  
+  post "/forms_and_streams" => "students#forms_and_streams", :as => "forms_and_streams", via: [:post]
 
   get "/timetable" => "pages#timetable", as: "timetable"
 end

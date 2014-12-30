@@ -7,7 +7,7 @@
   <!-- start:bootstrap v3.2.0 -->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <!-- start:style for this page -->
     <!--<link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">-->
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -541,5 +541,6 @@
             <%= yield %>
         </aside>
       </div>
+      <%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => false %>
       </body>
       </html>
