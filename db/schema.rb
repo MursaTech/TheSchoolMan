@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224164648) do
+ActiveRecord::Schema.define(version: 20141231105422) do
 
   create_table "accounts", force: true do |t|
     t.string   "email"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20141224164648) do
     t.integer  "stream_id"
     t.string   "previous_school"
     t.string   "last_exam_score"
+    t.string   "gender"
   end
 
   add_index "students", ["account_id"], name: "index_students_on_account_id"

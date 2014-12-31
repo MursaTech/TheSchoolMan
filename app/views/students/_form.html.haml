@@ -18,21 +18,33 @@
 							.iconic-input
 								%i.fa.fa-user
 								= f.text_field :name, class: "form-control"
-						.form-group
-							= f.label :admission_number
-							.iconic-input
-								%i.fa.fa-list-ol
-								= f.text_field :admission_number, class: "form-control"
-						.form-group
-							= f.label "Previous School"
-							.iconic-input
-								%i.fa.fa-university
-								= f.text_field :previous_school, class: "form-control"
-						.form-group
-							= f.label "Last Exam Score"
-							.iconic-input
-								%i.fa.fa-file-text-o
-								= f.text_field :last_exam_score, class: "form-control"
+						.row
+							.col-lg-6
+								.form-group
+									= f.label :admission_number
+									.iconic-input
+										%i.fa.fa-list-ol
+										= f.text_field :admission_number, class: "form-control"
+							.col-lg-6
+								.form-group
+									= f.label :gender
+									.iconic-input
+										%select.form-control{type: "text", name: "student[gender]"}
+											%option Male
+											%option Female
+						.row
+							.col-lg-6
+								.form-group
+									= f.label "Previous School"
+									.iconic-input
+										%i.fa.fa-university
+										= f.text_field :previous_school, class: "form-control"
+							.col-lg-6
+								.form-group
+									= f.label "Last Exam Score"
+									.iconic-input
+										%i.fa.fa-file-text-o
+										= f.text_field :last_exam_score, class: "form-control"
 						.form-group
 							%label Class
 							.row
@@ -56,14 +68,17 @@
 							/ 						= form.name
 							/ 	%select.form-control#streams{:type => "text"}
 							/ 		%option Select a stream
-						.form-group
-							= f.label :dob, "Date of Birth"
-							.iconic-input
-								%i.fa.fa-calendar
-								= f.text_field :dob, class: "datetimepicker form-control"
-						.form-group
-							= f.label :photo
-							= f.file_field :photo, class: "form-control"
+						.row
+							.col-lg-6
+								.form-group
+									= f.label :dob, "Date of Birth"
+									.iconic-input
+										%i.fa.fa-calendar
+										= f.text_field :dob, class: "datetimepicker form-control"
+							.col-lg-6
+								.form-group
+									= f.label :photo
+									= f.file_field :photo, class: "form-control"
 					.col-lg-6
 						%br
 						%h3 Guardian's Details
