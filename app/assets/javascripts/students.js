@@ -1,17 +1,31 @@
+function populateStreams(form_id) {
+  $("#streams").empty();
+  $.ajax({
+    type: "POST",
+    url: '/forms_and_streams',
+    dataType: 'json',
+    data: { form: form_id},
+    success: function(data, textStatus, jqXhr) {
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i])
+        $("#streams").append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+      };
+    }
+  });
+}
+
 $(function() {
+  if (window.location.pathname.indexOf("edit") >= 0 && window.location.pathname.indexOf("students") >= 0) {
+    $.get(window.location.pathname.substring(0, (window.location.pathname.indexOf('edit') - 1)) + '.json', function(data) {
+      $("#classes").val(data['stream']['form_id']);
+      populateStreams($('select[id=classes]').val());
+      $("#streams").val(data['stream']['id']);
+      $("#parents").val(data.guardian_id);
+      console.log(data['stream']['id'])
+    })
+  };
   $("#classes").change(function() {
-    $.ajax({
-      type: "POST",
-      url: '/forms_and_streams',
-      dataType: 'json',
-      data: { form: $('select[id=classes]').val()},
-      success: function(data, textStatus, jqXhr) {
-        for (var i = 0; i < data.length; i++) {
-          console.log(data[i])
-          $("#streams").append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
-        };
-      }
-    });
+    populateStreams($('select[id=classes]').val());
   })
 
   $("#parents").change(function() {
@@ -142,7 +156,8 @@ $(function() {
       });
       $('#students').val(students_array);
       // contact_num = ("#students_table input:checked").length;
-      $('#class_modal #lbl-msg').html('You are about to add '+String(students_array.length)+' students to another class. Select from the dropdown below:');
+      $('#class_modal #lbl-msg').html('You are about to add '+String(students_array.length)
+        +' students to another class. Select from the dropdown below:');
       $('#class_modal')
       .modal('setting', {
         onApprove: function(){

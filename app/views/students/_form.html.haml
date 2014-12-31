@@ -101,27 +101,27 @@
 						%button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
 							%i.fa.fa-save
 							Save
-%script{:charset => "utf-8", :type => "text/javascript"}
-	function populateStreams() {
-	var e = document.getElementById("classes");
-	var value = e.options[e.selectedIndex].text;
-	var f = document.getElementById("forms-streams").value
-	alert(f)
-	/ for (var item in f) {
-	/ console.log(f[item])
-	/ if(f[item] === value) {
-	/ var option = document.createElement("option");
-	/ option.text = f[item];
-	/ option.value = item; 
-	/ document.getElementById("streams").options.add(option);
-	/ }
-	/ }
-	/ alert("The input value has changed. The new value is: " + f);
-	}
+/ %script{:charset => "utf-8", :type => "text/javascript"}
+/ 	function populateStreams() {
+/ 	var e = document.getElementById("classes");
+/ 	var value = e.options[e.selectedIndex].text;
+/ 	var f = document.getElementById("forms-streams").value
+/ 	alert(f)
+/ 	/ for (var item in f) {
+/ 	/ console.log(f[item])
+/ 	/ if(f[item] === value) {
+/ 	/ var option = document.createElement("option");
+/ 	/ option.text = f[item];
+/ 	/ option.value = item; 
+/ 	/ document.getElementById("streams").options.add(option);
+/ 	/ }
+/ 	/ }
+/ 	/ alert("The input value has changed. The new value is: " + f);
+/ 	}
 
-	function parentDetails() {
-	document.getElementById("guardian_name").value = "Muaad"
-	}
+/ 	function parentDetails() {
+/ 	document.getElementById("guardian_name").value = "Muaad"
+/ 	}
 / %script{:src => "//code.jquery.com/jquery-1.10.2.js"}
 / :javascript
 / 	alert("hello")

@@ -20,7 +20,7 @@ class StudentsController < ApplicationController
     respond_with(@student)
     # @student = Student.find(params[:id])
     # respond_to do |format|
-    #   format.json { render json: { student: @student} }
+    #   format.json { render json: @student }
     #   format.html { render action: 'show' }
     # end
   end
