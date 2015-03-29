@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141231105422) do
+ActiveRecord::Schema.define(version: 20141231115056) do
 
   create_table "accounts", force: true do |t|
     t.string   "email"
@@ -169,12 +169,12 @@ ActiveRecord::Schema.define(version: 20141231105422) do
   add_index "user_accounts", ["user_id"], name: "index_user_accounts_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
+    t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -194,6 +194,17 @@ ActiveRecord::Schema.define(version: 20141231105422) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.string   "id_number"
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "user_type"
+    t.string   "gender"
+    t.boolean  "is_support",             default: false
+    t.boolean  "is_admin",               default: false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

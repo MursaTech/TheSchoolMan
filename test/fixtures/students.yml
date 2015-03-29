@@ -17,6 +17,7 @@
 #  stream_id          :integer
 #  previous_school    :string(255)
 #  last_exam_score    :string(255)
+#  gender             :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

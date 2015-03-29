@@ -1,5 +1,12 @@
-%h1 New stream
-
-= render 'form'
-
-= link_to 'Back', streams_path
+%section.content
+	.row
+		.col-lg-6
+			%h1
+				Classes
+				%small Add a new class
+			= render 'forms/form'
+		.col-lg-6
+			%h1
+				Streams
+				%small Add a new stream
+			= render 'form'

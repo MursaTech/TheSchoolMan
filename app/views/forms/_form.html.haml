@@ -1,13 +1,20 @@
-= form_for @form do |f|
-  - if @form.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@form.errors.count, "error")} prohibited this form from being saved:"
-      %ul
-        - @form.errors.full_messages.each do |msg|
-          %li= msg
+%section.panel
+  = form_for @form do |f|
+    .panel-body
+      - if @form.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@form.errors.count, "error")} prohibited this form from being saved:"
+          %ul
+            - @form.errors.full_messages.each do |msg|
+              %li= msg
+      .form-group
+        = f.label :name
+        .iconic-input
+          %i.fa.fa-book
+          = f.text_field :name, class: "form-control"
+    .panel-footer
+      .actions.pull-right
+        %button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+          %i.fa.fa-save
+          Save
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .actions
-    = f.submit 'Save'

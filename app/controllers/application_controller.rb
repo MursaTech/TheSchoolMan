@@ -9,13 +9,13 @@ class ApplicationController < ActionController::Base
   # helper_method :forms_and_streams
 
   def filter_tenant_via_devise_or_params 
-    if user_signed_in?
-      account = current_user.main_account
-      set_current_tenant(account)
-    else params[:account].present?
-      account = Account.find_by_email(params[:account])
-      set_current_tenant(account)
-    end
+    # if user_signed_in?
+    #   account = current_user.main_account
+    #   set_current_tenant(account)
+    # else params[:account].present?
+    #   account = Account.find_by_email(params[:account])
+    #   set_current_tenant(account)
+    # end
   end
 
   # def forms_and_streams

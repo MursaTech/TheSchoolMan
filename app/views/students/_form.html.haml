@@ -55,7 +55,8 @@
 											%option{value: "#{form.id}"}
 												= form.name
 								.col-sm-9{style: "padding-left: 5px;"}
-									%select.form-control#streams{:type => "text", name: "student[stream_id]"}
+									/ %select.form-control#streams{:type => "text", name: "student[stream_id]"}
+									= f.grouped_collection_select :stream_id, Form.order(:name), :streams, :name, :id, :name, include_blank: true, html_options: {class: "form-control"}
 							/ .input-group.m-bot15
 							/ 	.input-group-btn
 							/ 		%button.btn.btn-primary.dropdown-toggle{"data-original-title" => "", "data-toggle" => "dropdown", :title => "", :type => "button"}

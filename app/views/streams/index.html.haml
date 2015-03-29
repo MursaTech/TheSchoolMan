@@ -1,27 +1,246 @@
-%h1 Listing streams
+%section.content
+	- if notice
+		.alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+			%button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+				%span{"aria-hidden" => "true"} ×
+			= notice
+	%h1
+		Streams
+		%small All your streams
+	/ start:breadcrumb
+	%ol.breadcrumb
+		%li
+			%a{:href => "#"}
+				%i.fa.fa-users
+				Streams
+		%li
+			= link_to "All", streams_path
+		.pull-right
+			.btn-toolbar{role: "toolbar"}
+				.btn-group
+					/ %button.btn.btn-default{"data-container" => "body", "data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", "data-original-title" => "", "data-placement" => "top", "data-toggle" => "popover", :title => "Lorem Ipsum", :type => "button"} Popover on top
+					%button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+						%i.fa.fa-plus
+						New
+						%span.caret
+					%ul.dropdown-menu{:role => "menu"}
+						%li
+							%a#new-class{href: "#", "data-toggle" => "modal", "data-target" => "#new_class_modal"}
+								Class
+						%li
+							%a#new-stream{href: "#", "data-toggle" => "modal", "data-target" => "#new_stream_modal"}
+								Stream
+				.btn-group
+					%button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+						%i.fa.fa-cog
+						Action
+						%span.caret
+					%ul.dropdown-menu{:role => "menu"}
+						%li
+							%a#assign_teacher{href: "#", "data-toggle" => "modal", "data-target" => "#assign_teacher_modal"}
+								Assign Class Teacher
+						%li
+							%a#assign_prefect{href: "#", "data-toggle" => "modal", "data-target" => "#assign_prefect_modal"}
+								Assign Class Prefect
+					/   / %li.divider
+					/   / - Form.all.each do |form|
+					/   /   %li
+					/   /     %a{:href => "?class=#{form.id}", id: "#{form.name}"}
+					/   /       = form.name
+					/ %a.btn.btn-default{href: "#"}
+					/   %i.fa.fa-cloud-upload
+					/   Upload
+					/   %span.caret
+				.btn-group
+					%a.btn.btn-default#add_to_class{href: "#", "data-toggle" => "modal", "data-target" => "#class_modal"}
+						%i.fa.fa-mail-forward
+						Change Parent Class        
+					%a#delete-streams.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_stream_modal"}
+						%i.fa.fa-times
+						Delete     
+					/ %a.btn.btn-default{href: "#{new_stream_path}"}
+					/   %i.fa.fa-plus
+					/   New
+	/ end:breadcrumb
+	/ start:content
+	.row
+		.col-md-12
+			/ start:dynamic data table
+			.adv-table
+				%table#example.display.table.table-bordered.table-striped
+					%thead
+						%tr
+							%th
+								= check_box_tag "toggle_streams"
+							%th Class
+							%th Parent Class
+							%th Class Teacher
+							%th Class Prefect
+							%th Students
+					%tbody.streams_table
+						- @streams.each do |stream|
+							%tr.gradeX
+								%td
+									= check_box_tag "stream[stream.id]", stream.id
+								%td
+									= link_to stream.name, stream
+								%td
+									= stream.form.nil?? "" : stream.form.name
+								%td
+									= stream.user.nil?? "" : stream.user.name
+								%td
+									= stream.student.nil?? "" : stream.student.name
+								%td
+									= link_to stream.students.count, "#{students_path}?class=#{stream.id}"
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Form
-      %th User
-      %th Student
-      %th
-      %th
-      %th
-      
-  %tbody
-    - @streams.each do |stream|
-      %tr
-        %td= stream.name
-        %td= stream.form
-        %td= stream.user
-        %td= stream.student
-        %td= link_to 'Show', stream
-        %td= link_to 'Edit', edit_stream_path(stream)
-        %td= link_to 'Destroy', stream, :method => :delete, :data => { :confirm => 'Are you sure?' }
+	#delete_stream_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Delete Streams?
+				= form_tag delete_multiple_streams_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'delete_streams'
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-danger{:type => "submit"} 
+							%i.fa.fa-trash-o
+							Delete
 
-%br
+	#assign_teacher_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add Streams to class
+				= form_tag class_assign_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'stream'
+						= hidden_field_tag 'assignee', "teacher"
+						/ %label Select a class from the dropdown below
+						%select.form-control{name: 'teacher'}
+							/ %option{value: "select"} Select a class
+							- User.where(user_type: "Teacher").each do |t|
+								%option{value: t.id}
+									= t.name
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-plus
+							Assign class Teacher
 
-= link_to 'New Stream', new_stream_path
+	#assign_prefect_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add Streams to class
+				= form_tag class_assign_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'stream'
+						= hidden_field_tag 'assignee', "prefect"
+						/ %label Select a class from the dropdown below
+						%select.form-control{name: 'prefect', id: "prefect"}
+							/ %option{value: "select"} Select a class
+							/ - Student.all.each do |s|
+							/   %option{value: s.id}
+							/     = s.name
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-plus
+							Assign class Prefect
+
+	#class_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add Streams to class
+				= form_tag add_stream_to_class_path do |f|
+					.modal-body
+						%label#lbl-msg
+						= hidden_field_tag 'streams'
+						/ %label Select a class from the dropdown below
+						%select.form-control{name: 'form'}
+							/ %option{value: "select"} Select a class
+							- Form.all.each do |form|
+								%option{value: form.name}
+									= form.name
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-plus
+							Add to class
+
+	#new_class_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add a new Class
+				= form_for Form.new do |f|
+					.modal-body
+						.form-group
+							= f.label :name
+							.iconic-input
+								%i.fa.fa-home
+								= f.text_field :name, class: "form-control"
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-save
+							Save
+
+	#new_stream_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} &times;
+					%h4#myModalLabel.modal-title Add a new Sub Class (Stream)
+				= form_for Stream.new do |f|
+					.modal-body
+						.form-group
+							= f.label :name
+							.iconic-input
+								%i.fa.fa-home
+								= f.text_field :name, class: "form-control"						
+						.form-group
+							= f.label :form, "Parent Class"
+							%select.form-control{type: "text", name: "stream[form_id]"}
+								- Form.all.each do |form|
+									%option{value: form.id}
+										= form.name
+						.form-group
+							= f.label :user, "Class Teacher"
+							%select.form-control{type: "text", name: "stream[user_id]"}
+								- User.where(user_type: "Teacher").each do |teacher|
+									%option{value: teacher.id}
+										= teacher.name
+					.modal-footer
+						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+							%i.fa.fa-times
+							Cancel
+						%button.btn.btn-success{:type => "submit"} 
+							%i.fa.fa-save
+							Save

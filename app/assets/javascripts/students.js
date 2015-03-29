@@ -15,6 +15,7 @@ function populateStreams(form_id) {
 }
 
 $(function() {
+  $('#student_stream_id').addClass('form-control')
   if (window.location.pathname.indexOf("edit") >= 0 && window.location.pathname.indexOf("students") >= 0) {
     $.get(window.location.pathname.substring(0, (window.location.pathname.indexOf('edit') - 1)) + '.json', function(data) {
       $("#classes").val(data['stream']['form_id']);
@@ -24,8 +25,14 @@ $(function() {
       console.log(data['stream']['id'])
     })
   };
-  $("#classes").change(function() {
-    populateStreams($('select[id=classes]').val());
+  // $("#classes").change(function() {
+  //   populateStreams($('select[id=classes]').val());
+  // })
+
+  streams = $('#student_stream_id').html()
+  $('#classes').change(function() {
+    options = $(streams).filter("optgroup[label='" + $('#classes :selected').text().trim() + "']").html()
+    $('#student_stream_id').html(options)
   })
 
   $("#parents").change(function() {
@@ -142,7 +149,7 @@ $(function() {
     }
   });
 
-  $('#add_to_class').click(function(){
+  $('#move_to_class').click(function(){
     if ($(".students_table input:checked").length < 1)
     {
       alert("You have not selected any students.");

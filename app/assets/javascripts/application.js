@@ -16,6 +16,7 @@
 //= require jquery_ujs
 // require bootstrap.min
 //= require arjuna
+//= require streams
 //= require students
 //= require pages
 //= require tasks
@@ -42,6 +43,6 @@
 //= require raphael-min
 //= require morris.min
 //= require morris-script
-//= require_tree .
+// require_tree .
 //= require_self
 
